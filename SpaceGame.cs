@@ -48,8 +48,8 @@ namespace Spacegame
             starLength = 30f;
             starChuncks = new Dictionary<Vector2, Vector2[]>();
             futureStarChuncks = new Dictionary<Vector2, Vector2[]>();
-            chunkSize = 64;
-            ship = new SpaceShip(new Vector2(0, 0));
+            chunkSize = 150;
+            ship = new SpaceShip(new Vector2(0, 0), 0f);
             camera = new Camera2D(
                 new Vector2(ScreenWidth / 2, ScreenHeight / 2),
                 ship.Position,
@@ -60,7 +60,7 @@ namespace Spacegame
             randy = new Random();
             Image img = LoadImage("Resources/Images/Star.png");
             ImageResize(ref img, 10, 10);
-            
+
             starGraphic = LoadTextureFromImage(img);
             UnloadImage(img);
             base.Init();
@@ -83,6 +83,12 @@ namespace Spacegame
                 starLength -= 1f;
             if (IsKeyDown(KeyboardKey.KEY_E))
                 starLength += 1f;
+
+            if (IsKeyDown(KeyboardKey.KEY_T))
+                ship.Rotation -= 5f * GetFrameTime();
+            if (IsKeyDown(KeyboardKey.KEY_G))
+                ship.Rotation += 5f * GetFrameTime();
+
 
             if (IsKeyDown(KeyboardKey.KEY_Z))
                 camera.zoom -= 0.1f * GetFrameTime();
@@ -134,8 +140,8 @@ namespace Spacegame
                         DrawStarLines(stars, adjSector, starMode);
                     }
 
-                    DrawRectangleLines((int)sector.X * chunkSize, (int)sector.Y * chunkSize, chunkSize, chunkSize, Color.WHITE);
-                    DrawText($"({sector.X},{sector.Y})", (int)sector.X * chunkSize + 2, (int)sector.Y * chunkSize + 2, 8, Color.WHITE);
+                    //DrawRectangleLines((int)sector.X * chunkSize, (int)sector.Y * chunkSize, chunkSize, chunkSize, Color.WHITE);
+                    //DrawText($"({sector.X},{sector.Y})", (int)sector.X * chunkSize + 2, (int)sector.Y * chunkSize + 2, 8, Color.WHITE);
                 }
                 //DrawRectangleLines((int)ship.Position.X - ScreenWidth / 2, (int)ship.Position.Y - ScreenHeight / 2, ScreenWidth, ScreenHeight, Color.WHITE);
                 //DrawRectangleLines((int)ship.Position.X - ScreenWidth / 2 - chunkSize / 2, (int)ship.Position.Y - ScreenHeight / 2 - chunkSize / 2, ScreenWidth + chunkSize, ScreenHeight + chunkSize, Color.RED);
@@ -146,7 +152,7 @@ namespace Spacegame
 
             addChunks();
 
-            DrawSpaceShip(ship);
+            ship.Draw();
             //DrawText("Hello World", 100, 100, 20, Color.RAYWHITE);
             char[] keys = new[] {
                 'W', 'D', 'S', 'A'
@@ -259,12 +265,22 @@ namespace Spacegame
 
         void DrawSpaceShip(SpaceShip ship)
         {
-            int h = 5;
-            int w = 3;
-            DrawTriangle(ship.Position + new Vector2(0, h),
-                            ship.Position + new Vector2(w, -h),
-                            ship.Position + new Vector2(-w, -h),
-                            Color.RED);
+            int h = 50;
+            int w = 50;
+            Vector2 top = new Vector2(MathF.Sin(ship.Rotation) * w, -MathF.Cos(ship.Rotation) * h);
+            Vector2 left = new Vector2(MathF.Sin((3 * MathF.PI) / 4 + ship.Rotation) * w, -MathF.Cos((3 * MathF.PI) / 4 + ship.Rotation) * h);
+            Vector2 right = new Vector2(MathF.Sin((5 * MathF.PI) / 4 + ship.Rotation) * w, -MathF.Cos((5 * MathF.PI) / 4 + ship.Rotation) * h);
+            /*DrawTriangle(ship.Position + top,
+                            ship.Position + right,
+                            ship.Position + left,
+                            Color.RED);*/
+            DrawLineV(ship.Position + top,
+                            ship.Position + right, Color.RED);
+            DrawLineV(ship.Position + right,
+                            ship.Position + left, Color.RED);
+            DrawLineV(ship.Position + left,
+                            ship.Position + top, Color.RED);
+            DrawCircleLines((int)ship.Position.X, (int)ship.Position.Y, h, Color.RED);
         }
 
         void DrawStarLines(Vector2[] currStars, Vector2 adjSector, int mode)
@@ -292,42 +308,42 @@ namespace Spacegame
                             DrawLineV(v1, v2, color);
                         }
                     }
-                    else if (starMode == 1) 
+                    else if (starMode == 1)
                     {
                         if (distance < 16f)
                         {
                             DrawLineV(v1, v2, colors[0]);
                         }
                     }
-                    else if (starMode == 2) 
+                    else if (starMode == 2)
                     {
                         if (distance > 16f && distance < 32f)
                         {
                             DrawLineV(v1, v2, colors[1]);
                         }
                     }
-                    else if (starMode == 3) 
+                    else if (starMode == 3)
                     {
                         if (distance > 32f && distance < 64f)
                         {
                             DrawLineV(v1, v2, colors[2]);
                         }
                     }
-                    else if (starMode == 4) 
+                    else if (starMode == 4)
                     {
                         if (distance > 64f && distance < 96f)
                         {
                             DrawLineV(v1, v2, colors[3]);
                         }
                     }
-                    else if (starMode == 5) 
+                    else if (starMode == 5)
                     {
                         if (distance > 96f && distance < 128f)
                         {
                             DrawLineV(v1, v2, colors[4]);
                         }
                     }
-                    else if (starMode == 6) 
+                    else if (starMode == 6)
                     {
                         if (distance > 128f && distance < 150f)
                         {

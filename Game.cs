@@ -70,6 +70,7 @@ namespace Spacegame
 
         public virtual void Draw()
         {
+            
         }
 
         public void Dispose() {
