@@ -17,9 +17,9 @@ using C# bindings by [Chris Dill](https://github.com/ChrisDill/Raylib-cs)
 
 ## TO-DO
 - [ ] Complete Spaceship
- - [ ] Create Spaceship graphic with Draw functions
- - [ ] Add arcade-y physics for spaceship
+    - [ ] Create Spaceship graphic with Draw functions
+    - [ ] Add arcade-y physics for spaceship
 - [ ] Complete Universe
- - [ ] Add random planets with gravity
- - [ ] Add other interactable spaceships
+    - [ ] Add random planets with gravity
+    - [ ] Add other interactable spaceships
 - [ ] Possible port to C with original Raylib library 
