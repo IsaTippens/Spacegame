@@ -2,11 +2,11 @@
 {
     static class Program
     {
+        const int screenWidth = 1366;
+        const int screenHeight = 768;
         public static void Main()
         {
-            using (var game = new SpaceGame()) {
-                game.ScreenHeight = 768;
-                game.ScreenWidth = 1366;
+            using (var game = new SpaceGame(screenWidth, screenHeight)) {
                 game.Run();
             }
         }

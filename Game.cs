@@ -31,7 +31,7 @@ namespace Spacegame
 
         public Game() : this(800, 480, "Hello World")
         {
-            Init();
+            
         }
         public Game(int screenWidth, int screenHeight, string title)
         {
@@ -39,6 +39,7 @@ namespace Spacegame
             InitWindow(screenWidth, screenHeight, title);
             ScreenDimensions = new Vector2(screenWidth, screenHeight);
             clearColor = Color.RAYWHITE;
+            Init();
         }
 
         public virtual void Init() {
