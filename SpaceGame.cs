@@ -115,6 +115,7 @@ namespace Spacegame
                 starMode = 7;
             ship.Position += delta * speed * GetFrameTime();
             camera.target = ship.Position;
+            ship.Update();
 
         }
 

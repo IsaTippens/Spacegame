@@ -28,31 +28,47 @@ namespace Spacegame
             _rotation = rotation;
         }
 
-        public void Draw()
+        public void Update()
         {
-            int h = 20;
-            int w = 20;
-            Vector2 top = new Vector2(MathF.Sin(Rotation) * w, -MathF.Cos(Rotation) * h);
-            Vector2 left = new Vector2(MathF.Sin((3 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((3 * MathF.PI) / 4 + Rotation) * h);
-            Vector2 right = new Vector2(MathF.Sin((5 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((5 * MathF.PI) / 4 + Rotation) * h);
-            /*DrawTriangle(Position + top,
-                            Position + right,
-                            Position + left,
-                            Color.RED);*/
-            DrawLineV(Position + top,
-                            Position + right, Color.RED);
-            DrawLineV(Position + right,
-                            Position + left, Color.RED);
-            DrawLineV(Position + left,
-                            Position + top, Color.RED);
-            
+            //Rotation += 10f * GetFrameTime();
         }
 
-        void DebugDraw() 
-        {   
+        //Calculations here
+        //https://www.desmos.com/calculator/iksujbjslc
+        public void Draw()
+        {
+            int size = 20;
+            int h = size;
+            int w = size;
+
+            //top, right, inner, left
+            Vector2[] points = new[] { 
+                new Vector2(MathF.Sin(Rotation) * w, -MathF.Cos(Rotation) * h),
+                new Vector2(MathF.Sin((5 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((5 * MathF.PI) / 4 + Rotation) * h),
+                new Vector2(-MathF.Sin(Rotation) / 4 * w, -MathF.Cos(MathF.PI + Rotation) / 4 * h),
+                new Vector2(MathF.Sin((3 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((3 * MathF.PI) / 4 + Rotation) * h),
+            };
+
+            for (int i = 1; i <= points.Length; i++)
+            {
+                if (i == points.Length)
+                {
+                    DrawLineV(Position + points[i - 1],
+                            Position + points[0], Color.RED);
+                }
+                else
+                {
+                    DrawLineV(Position + points[i - 1],
+                            Position + points[i], Color.RED);
+                }
+            }
+        }
+
+        void DebugDraw()
+        {
             int h = 20;
             DrawCircleLines((int)Position.X, (int)Position.Y, h, Color.RED);
-        }        
+        }
     }
 
 
