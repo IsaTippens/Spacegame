@@ -1,9 +1,11 @@
-![banner](/Resources/Images/banner.png)
+
 # Spacegame
 A game set in space
 
 made with [raylib](https://github.com/raysan5/raylib)
 using C# bindings by [Chris Dill](https://github.com/ChrisDill/Raylib-cs)
+
+![banner](/Resources/Images/banner.png)
 
 ## Setup
 ### Prerequisites
