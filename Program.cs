@@ -6,7 +6,7 @@
         const int screenHeight = 768;
         public static void Main()
         {
-            using (var game = new SpaceGame(screenWidth, screenHeight)) {
+            using (var game = new TestGame()) {
                 game.Run();
             }
         }
