@@ -49,7 +49,7 @@ namespace Spacegame
             starChuncks = new Dictionary<Vector2, Vector2[]>();
             futureStarChuncks = new Dictionary<Vector2, Vector2[]>();
             chunkSize = 150;
-            ship = new SpaceShip(new Vector2(0, 0), 0f);
+            ship = new SpaceShip(new Vector2(0, 0), 0f, 20);
             camera = new Camera2D(
                 new Vector2(ScreenWidth / 2, ScreenHeight / 2),
                 ship.Position,
@@ -154,6 +154,7 @@ namespace Spacegame
             addChunks();
 
             ship.Draw();
+            //ship.DebugDraw();
             //DrawText("Hello World", 100, 100, 20, Color.RAYWHITE);
             char[] keys = new[] {
                 'W', 'D', 'S', 'A'
@@ -262,26 +263,6 @@ namespace Spacegame
             }
             futureStarChuncks.Add(sector, chunk);
             return chunk;
-        }
-
-        void DrawSpaceShip(SpaceShip ship)
-        {
-            int h = 50;
-            int w = 50;
-            Vector2 top = new Vector2(MathF.Sin(ship.Rotation) * w, -MathF.Cos(ship.Rotation) * h);
-            Vector2 left = new Vector2(MathF.Sin((3 * MathF.PI) / 4 + ship.Rotation) * w, -MathF.Cos((3 * MathF.PI) / 4 + ship.Rotation) * h);
-            Vector2 right = new Vector2(MathF.Sin((5 * MathF.PI) / 4 + ship.Rotation) * w, -MathF.Cos((5 * MathF.PI) / 4 + ship.Rotation) * h);
-            /*DrawTriangle(ship.Position + top,
-                            ship.Position + right,
-                            ship.Position + left,
-                            Color.RED);*/
-            DrawLineV(ship.Position + top,
-                            ship.Position + right, Color.RED);
-            DrawLineV(ship.Position + right,
-                            ship.Position + left, Color.RED);
-            DrawLineV(ship.Position + left,
-                            ship.Position + top, Color.RED);
-            DrawCircleLines((int)ship.Position.X, (int)ship.Position.Y, h, Color.RED);
         }
 
         void DrawStarLines(Vector2[] currStars, Vector2 adjSector, int mode)

@@ -33,6 +33,11 @@ namespace Spacegame
         {
             
         }
+
+        public Game(int screenWidth, int screenHeight) : this(screenWidth, screenHeight, "")
+        {
+        
+        }
         public Game(int screenWidth, int screenHeight, string title)
         {
             
@@ -47,7 +52,7 @@ namespace Spacegame
         }
         public void Run()
         {
-            ToggleFullscreen();
+            //ToggleFullscreen();
             while (!WindowShouldClose())
             {
                 Update();
@@ -70,7 +75,7 @@ namespace Spacegame
 
         public virtual void Draw()
         {
-            
+
         }
 
         public void Dispose() {

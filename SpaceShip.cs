@@ -5,69 +5,58 @@ using System;
 
 namespace Spacegame
 {
-    public class SpaceShip
+    public class SpaceShip : GameObject
     {
-        private Vector2 _position;
-
-        private float _rotation;
-
-        public Vector2 Position
+        Vector2[] graphicPoints;
+        public SpaceShip(Vector2 position, float rotation, float size) : base(position, rotation, size)
         {
-            get => _position;
-            set => _position = value;
+            GenerateGraphic();
         }
 
-        public float Rotation
-        {
-            get => _rotation;
-            set => _rotation = value;
-        }
-        public SpaceShip(Vector2 position, float rotation)
-        {
-            _position = position;
-            _rotation = rotation;
-        }
-
-        public void Update()
+        public override void Update()
         {
             //Rotation += 10f * GetFrameTime();
         }
 
-        //Calculations here
-        //https://www.desmos.com/calculator/iksujbjslc
-        public void Draw()
+
+        public override void Draw()
         {
-            int size = 20;
-            int h = size;
-            int w = size;
+            var gp = graphicPoints;
 
-            //top, right, inner, left
-            Vector2[] points = new[] { 
-                new Vector2(MathF.Sin(Rotation) * w, -MathF.Cos(Rotation) * h),
-                new Vector2(MathF.Sin((5 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((5 * MathF.PI) / 4 + Rotation) * h),
-                new Vector2(-MathF.Sin(Rotation) / 4 * w, -MathF.Cos(MathF.PI + Rotation) / 4 * h),
-                new Vector2(MathF.Sin((3 * MathF.PI) / 4 + Rotation) * w, -MathF.Cos((3 * MathF.PI) / 4 + Rotation) * h),
-            };
 
-            for (int i = 1; i <= points.Length; i++)
+
+            for (int i = 1; i <= gp.Length; i++)
             {
-                if (i == points.Length)
+                if (i == gp.Length)
                 {
-                    DrawLineV(Position + points[i - 1],
-                            Position + points[0], Color.RED);
+                    DrawLineV(Position + gp[i - 1],
+                            Position + gp[0], Color.RED);
                 }
                 else
                 {
-                    DrawLineV(Position + points[i - 1],
-                            Position + points[i], Color.RED);
+                    DrawLineV(Position + gp[i - 1],
+                            Position + gp[i], Color.RED);
                 }
             }
         }
 
-        void DebugDraw()
+        public override void DebugDraw()
         {
-            int h = 20;
-            DrawCircleLines((int)Position.X, (int)Position.Y, h, Color.RED);
+            DrawCircleLines((int)Position.X, (int)Position.Y, Scale, Color.RED);
+            DrawCircleLines((int)Position.X, (int)Position.Y, Scale / 4, Color.RED);
+        }
+
+        void GenerateGraphic()
+        {
+            //Calculations here
+            //https://www.desmos.com/calculator/iksujbjslc
+            //top, right, inner, left
+            graphicPoints = new[] {
+                new Vector2(MathF.Sin(Rotation) * Scale, -MathF.Cos(Rotation) * Scale),
+                new Vector2(MathF.Sin((5 * MathF.PI) / 4 + Rotation) * Scale, -MathF.Cos((5 * MathF.PI) / 4 + Rotation) * Scale),
+                new Vector2(-MathF.Sin(Rotation) / 4 * Scale, -MathF.Cos(MathF.PI + Rotation) / 4 * Scale),
+                new Vector2(MathF.Sin((3 * MathF.PI) / 4 + Rotation) * Scale, -MathF.Cos((3 * MathF.PI) / 4 + Rotation) * Scale),
+            };
         }
     }
 
