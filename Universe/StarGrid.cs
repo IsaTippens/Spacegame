@@ -11,22 +11,11 @@ namespace Spacegame.Universe
 {
     public class StarGrid : Grid<Vector2[]>
     {
-        int _maxStars = 5;
+        int _maxStars = 3;
         int _minStars = 1;
 
-        Texture2D star;
         public StarGrid()
         {
-            LoadTexture();
-        }
-
-        public void LoadTexture()
-        {
-            Image img = LoadImage("Resources/Images/Star.png");
-            ImageResize(ref img, 10, 10);
-
-            star = LoadTextureFromImage(img);
-            UnloadImage(img);
         }
 
         public override Vector2[] GenerateChunk(Vector2 sector)
@@ -46,18 +35,7 @@ namespace Spacegame.Universe
 
         public override void Draw()
         {
-            foreach (var chunk in Chunks)
-            {
-                Vector2 sector = chunk.Key;
-                Vector2[] stars = chunk.Value;
-                foreach (var pos in stars)
-                {
-                    int x = (int)(pos.X + sector.X * ChunkSize - 5);
-                    int y = (int)(pos.Y + sector.Y * ChunkSize - 5);
-                    DrawTexture(star, x, y, Color.WHITE);
-                }
-
-            }
+           
             base.Draw();
         }
         public override void DebugDraw()
