@@ -23,6 +23,12 @@ namespace Spacegame
             set => _rotation = value;
         }
 
+        public float RotationDegrees 
+        {
+            get => Rotation * (180f / MathF.PI);
+            set => Rotation = value * (MathF.PI / 180f); 
+        }
+
         public float Scale
         {
             get => _scale;

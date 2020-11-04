@@ -25,6 +25,7 @@ namespace Spacegame
         public TestGame(int screenWidth = 1280, int screenHeight = 720) : base(screenWidth, screenHeight)
         {
             _instance = this;
+            SetTargetFPS(60);
         }
 
         public override void Init()
@@ -32,7 +33,7 @@ namespace Spacegame
             base.Init();
             clearColor = Color.BLACK;
             grid = new StarGrid();
-            grid.ChunkSize = 100;
+            grid.ChunkSize = 200;
             camera = new Camera2D(
                 new Vector2(ScreenWidth / 2,  ScreenHeight / 2),
                 new Vector2(0, 0),

@@ -9,7 +9,7 @@ using static Spacegame.Utils;
 
 namespace Spacegame.Universe
 {
-    public class StarGrid : Grid<Vector2[]>
+    public class StarGrid : Grid<Star[]>
     {
         int _maxStars = 3;
         int _minStars = 1;
@@ -18,15 +18,19 @@ namespace Spacegame.Universe
         {
         }
 
-        public override Vector2[] GenerateChunk(Vector2 sector)
+        public override Star[] GenerateChunk(Vector2 sector)
         {
             int width = ChunkSize, height = ChunkSize;
-            Vector2[] chunk = new Vector2[RNG.Next(_minStars, _maxStars)];
+            Star[] chunk = new Star[RNG.Next(_minStars, _maxStars)];
+
             for (int i = 0; i < chunk.Length; i++)
             {
-                chunk[i] = new Vector2(
-                    RNG.Next(1, width),
-                    RNG.Next(1, height)
+                chunk[i] = new Star(new Vector2(
+                    RNG.Next(1, width) + sector.X * width,
+                    RNG.Next(1, height) + sector.Y * height
+                    ),
+                    RNG.Next(2, 14),
+                    (float)RNG.NextDouble() * (MathF.PI * 2)
                     );
             }
 
@@ -35,7 +39,7 @@ namespace Spacegame.Universe
 
         public override void Draw()
         {
-           
+
             base.Draw();
         }
         public override void DebugDraw()

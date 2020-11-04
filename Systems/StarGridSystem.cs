@@ -25,13 +25,13 @@ namespace Spacegame.Systems
         }
         public StarGridSystem() : this(new StarGrid())
         {
-            
+
         }
 
         public StarGridSystem(StarGrid starGrid)
         {
             _sg = starGrid;
-           LoadTexture();
+            LoadTexture();
         }
 
         public void LoadTexture()
@@ -60,6 +60,14 @@ namespace Spacegame.Systems
                     {
                         _sg.GenerateChunk(sector);
                     }
+                    else
+                    {
+                        Star[] chunk = _sg.GetChunk(sector);
+                        foreach (var star in chunk)
+                        {
+                            star.Update();
+                        }
+                    }
                 }
             }
 
@@ -72,7 +80,7 @@ namespace Spacegame.Systems
             Vector2 center = PositionToSector(cameraTarget);
             int cs = _sg.ChunkSize;
             int xBlocks = (int)MathF.Ceiling(screenWidth / cs) + 1;
-            int yBlocks = (int)MathF.Ceiling(screenHeight /cs) + 1;
+            int yBlocks = (int)MathF.Ceiling(screenHeight / cs) + 1;
 
             for (int y = -1; y < yBlocks + 1; y++)
             {
@@ -82,13 +90,12 @@ namespace Spacegame.Systems
                         center.X - (xBlocks / 2) + x,
                         center.Y - (yBlocks / 2) + y
                     );
-                    Vector2[] chunk = _sg.GetChunk(sector);
-                    foreach (var pos in chunk)
-                {
-                    int starX = (int)(pos.X + sector.X * cs - 5);
-                    int starY = (int)(pos.Y + sector.Y * cs - 5);
-                    DrawTexture(star, starX, starY, Color.WHITE);
-                }
+                    Star[] chunk = _sg.GetChunk(sector);
+                    foreach (var star in chunk)
+                    {
+                        star.Draw();
+                        //star.DebugDraw();
+                    }
                 }
             }
             _sg.Draw();
