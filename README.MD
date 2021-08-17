@@ -1,6 +1,6 @@
 
 # Spacegame
-A game set in space
+A game set in space - amogus
 
 made with [raylib](https://github.com/raysan5/raylib)
 using C# bindings by [Chris Dill](https://github.com/ChrisDill/Raylib-cs)
